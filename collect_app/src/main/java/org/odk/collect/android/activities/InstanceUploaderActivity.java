@@ -14,6 +14,8 @@
 
 package org.odk.collect.android.activities;
 
+import static java.util.Arrays.stream;
+
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -24,6 +26,7 @@ import org.odk.collect.android.R;
 import org.odk.collect.android.fragments.dialogs.SimpleDialog;
 import org.odk.collect.android.injection.DaggerUtils;
 import org.odk.collect.android.listeners.InstanceUploaderListener;
+import org.odk.collect.android.openrosa.OpenRosaConstants;
 import org.odk.collect.android.tasks.InstanceServerUploaderTask;
 import org.odk.collect.android.utilities.ApplicationConstants;
 import org.odk.collect.android.utilities.ArrayUtils;
@@ -31,6 +34,7 @@ import org.odk.collect.android.utilities.AuthDialogUtility;
 import org.odk.collect.android.utilities.FormsRepositoryProvider;
 import org.odk.collect.android.utilities.InstanceUploaderUtils;
 import org.odk.collect.android.utilities.InstancesRepositoryProvider;
+import org.odk.collect.android.views.DayNightProgressDialog;
 import org.odk.collect.forms.FormsRepository;
 import org.odk.collect.forms.instances.InstancesRepository;
 
@@ -42,8 +46,6 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import timber.log.Timber;
-
-import static java.util.Arrays.stream;
 
 /**
  * Activity to upload completed forms.
@@ -168,7 +170,7 @@ public class InstanceUploaderActivity extends CollectAbstractActivity implements
             instanceServerUploaderTask = new InstanceServerUploaderTask();
 
             if (url != null) {
-                instanceServerUploaderTask.setCompleteDestinationUrl(url + getString(R.string.default_odk_submission));
+                instanceServerUploaderTask.setCompleteDestinationUrl(url + OpenRosaConstants.SUBMISSION);
 
                 if (deleteInstanceAfterUpload != null) {
                     instanceServerUploaderTask.setDeleteInstanceAfterSubmission(deleteInstanceAfterUpload);
@@ -262,7 +264,7 @@ public class InstanceUploaderActivity extends CollectAbstractActivity implements
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case PROGRESS_DIALOG:
-                progressDialog = new ProgressDialog(this);
+                progressDialog = new DayNightProgressDialog(this);
                 DialogInterface.OnClickListener loadingButtonListener =
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -360,7 +362,7 @@ public class InstanceUploaderActivity extends CollectAbstractActivity implements
         // TODO: is this really needed here? When would the task not have gotten a server set in
         // init already?
         if (url != null) {
-            instanceServerUploaderTask.setCompleteDestinationUrl(url + getString(R.string.default_odk_submission), false);
+            instanceServerUploaderTask.setCompleteDestinationUrl(url + OpenRosaConstants.SUBMISSION, false);
         }
         instanceServerUploaderTask.setRepositories(instancesRepository, formsRepository, settingsProvider);
         instanceServerUploaderTask.execute(instancesToSend);

@@ -628,14 +628,46 @@
     <string name="form_update_error">Form update failed</string>
     <string name="form_update_succeeded">Form update succeeded</string>
 
-    <string name="report_to_project_lead">If you keep having this problem, report it to the person who asked you to collect data.</string>
-    <string name="unreachable_error">Collect can\'t reach the server at %s. Did you enter the URL correctly?</string>
-    <string name="security_error">Collect can\'t connect securely to the server at %s. Did you enter the URL correctly?</string>
-    <string name="server_error">The server %1$s returned status code %2$s.</string>
-    <string name="invalid_response">The server %s provided an invalid response.</string>
+    <string name="load_remote_form_error">Form list download failed</string>
+
+    <string name="all_downloads_succeeded">All downloads succeeded!</string>
+    <string name="some_downloads_failed">%1$s of %2$s downloads failed!</string>
+    <!-- Part of form download dialog. Clicking it displays additional information about a form that failed -->
+    <string name="show_details">Show details</string>
+    <string name="form_details">ID: %1$s Version: %2$s</string>
     <string name="failure">Failure</string>
 
-    <string name="load_remote_form_error">Form list download failed</string>
+    <!--
+    ##############################################
+    # GET BLANK FORM - ERROR MESSAGES
+    ##############################################
+    -->
+
+    <string name="report_to_project_lead">If you keep having this problem, report it to the person who asked you to collect data.</string>
+
+    <!-- Displayed in error dialog for form downloads. Followed by instructions to talk to person who asked to collect data -->
+    <string name="unreachable_error">Collect can\'t reach the server at %s. Did you enter the URL correctly?</string>
+
+    <!-- Displayed in error dialog for form downloads. Followed by instructions to talk to person who asked to collect data -->
+    <string name="security_error">Collect can\'t connect securely to the server at %s. Did you enter the URL correctly?</string>
+
+    <!-- Displayed in error dialog for form downloads. Followed by instructions to talk to person who asked to collect data -->
+    <string name="server_error">The server %1$s returned status code %2$s.</string>
+
+    <!-- Displayed in error dialog for form downloads. Followed by instructions to talk to person who asked to collect data -->
+    <string name="invalid_response">The server %s provided an invalid response.</string>
+
+    <!-- Displayed in error dialog for form downloads. Followed by instructions to talk to person who asked to collect data -->
+    <string name="form_with_no_hash_error">The server did not provide a hash for this form.</string>
+
+    <!-- Displayed in error dialog for form downloads. Followed by instructions to talk to person who asked to collect data -->
+    <string name="form_parsing_error">This form cannot be processed.</string>
+
+    <!-- Displayed in error dialog for form downloads. Followed by instructions to talk to person who asked to collect data -->
+    <string name="form_save_disk_error">A disk error occurred on device while downloading this form.</string>
+
+    <!-- Displayed in error dialog for form downloads. Followed by instructions to talk to person who asked to collect data -->
+    <string name="form_with_invalid_submission_error">This form has an invalid submission URL.</string>
 
     <!--
     ##############################################
@@ -718,12 +750,6 @@
     <string name="change_password">ODK Password</string>
     <string name="password_error_whitespace">Leading or trailing whitespace not allowed in passwords</string>
     <string name="username_error_whitespace">Leading or trailing whitespace not allowed in usernames</string>
-    <string name="custom_server_paths">Custom server paths</string>
-    <string name="legacy_custom_server_paths_summary">Will be removed in a future version. Please use /formList and /submission on your server.</string>
-    <string name="change_formlist_url">Form list path (appended to URL)</string>
-    <string name="change_submission_url">Submission path (appended to URL)</string>
-    <string name="formlist_url">Form list path</string>
-    <string name="submission_url">Submission path</string>
 
     <string name="server_platform_google_sheets">Google Drive, Google Sheets</string>
     <string name="selected_google_account_text">Google account</string>
@@ -735,7 +761,7 @@
     <string name="app_theme">Theme</string>
     <string name="theme_light">Light theme</string>
     <string name="theme_dark">Dark theme</string>
-    <string name="theme_magenta">Magenta theme</string>
+    <string name="theme_system">Use device theme</string>
 
     <string name="language">Language</string>
     <string name="use_device_language">Use device language</string>
@@ -1084,4 +1110,11 @@
 
     <!-- Error shown when a user tries to open a form that's in a different project -->
     <string name="wrong_project_selected_for_form">To open this form, you must first open ODK Collect and switch to the project that contains it.</string>
+
+    <!--
+    ##############################################
+    # Errors
+    ##############################################
+    -->
+    <string name="errors">Errors</string>
 </resources>

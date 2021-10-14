@@ -14,6 +14,8 @@
 
 package org.odk.collect.android.geo;
 
+import static org.odk.collect.android.storage.StorageSubdirectory.LAYERS;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -50,13 +52,15 @@ import com.google.android.gms.maps.model.TileOverlayOptions;
 
 import org.odk.collect.android.R;
 import org.odk.collect.android.injection.DaggerUtils;
+import org.odk.collect.android.storage.StoragePathProvider;
+import org.odk.collect.android.utilities.IconUtils;
+import org.odk.collect.android.utilities.ReferenceLayerUtils;
+import org.odk.collect.android.utilities.ThemeUtils;
+import org.odk.collect.androidshared.utils.ToastUtils;
+import org.odk.collect.geo.MapPoint;
 import org.odk.collect.location.GoogleFusedLocationClient;
 import org.odk.collect.location.LocationClient;
 import org.odk.collect.location.LocationClientProvider;
-import org.odk.collect.android.storage.StoragePathProvider;
-import org.odk.collect.android.utilities.GeoUtils;
-import org.odk.collect.android.utilities.IconUtils;
-import org.odk.collect.android.utilities.ToastUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -68,8 +72,6 @@ import javax.inject.Inject;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import timber.log.Timber;
-
-import static org.odk.collect.android.storage.StorageSubdirectory.LAYERS;
 
 public class GoogleMapFragment extends SupportMapFragment implements
     MapFragment, LocationListener, LocationClient.LocationClientListener,
@@ -124,7 +126,7 @@ public class GoogleMapFragment extends SupportMapFragment implements
             .beginTransaction().replace(containerId, this).commitNow();
         getMapAsync((GoogleMap map) -> {
             if (map == null) {
-                ToastUtils.showShortToast(R.string.google_play_services_error_occured);
+                ToastUtils.showShortToast(requireContext(), R.string.google_play_services_error_occured);
                 if (errorListener != null) {
                     errorListener.onError();
                 }
@@ -187,7 +189,7 @@ public class GoogleMapFragment extends SupportMapFragment implements
 
     @Override public void applyConfig(Bundle config) {
         mapType = config.getInt(KEY_MAP_TYPE, GoogleMap.MAP_TYPE_NORMAL);
-        referenceLayerFile = GeoUtils.getReferenceLayerFile(config, storagePathProvider.getOdkDirPath(LAYERS));
+        referenceLayerFile = ReferenceLayerUtils.getReferenceLayerFile(config, storagePathProvider.getOdkDirPath(LAYERS));
         if (map != null) {
             map.setMapType(mapType);
             loadReferenceOverlay();
@@ -560,8 +562,8 @@ public class GoogleMapFragment extends SupportMapFragment implements
             );
         }
         if (accuracyCircle == null) {
-            int stroke = getResources().getColor(R.color.locationAccuracyCircle);
-            int fill = getResources().getColor(R.color.locationAccuracyFill);
+            int stroke = new ThemeUtils(requireContext()).getColorPrimaryDark();
+            int fill = getResources().getColor(R.color.color_primary_low_emphasis);
             accuracyCircle = map.addCircle(new CircleOptions()
                 .center(loc)
                 .radius(radius)
@@ -746,7 +748,7 @@ public class GoogleMapFragment extends SupportMapFragment implements
                 clearPolyline();
             } else if (polyline == null) {
                 polyline = map.addPolyline(new PolylineOptions()
-                    .color(getResources().getColor(R.color.mapLine))
+                    .color(requireContext().getResources().getColor(R.color.mapLineColor))
                     .zIndex(1)
                     .width(STROKE_WIDTH)
                     .addAll(latLngs)

@@ -131,6 +131,7 @@
   <!--Error message displayed when copying media from a temporary directory fails-->
   <!--Text displayed in the audio bar when background audio recording is explicitly disabled from the options menu. Should be as short as possible. The inserted string is ⋮ which indicates the options menu.-->
   <!--Error displayed when opened filled form has been deleted on disk-->
+  <!--Error displayed when something bad happens during updating widgets in a field-list group-->
   <!--##############################################
     # FORM FEATURES
     ##############################################-->
@@ -318,6 +319,17 @@
   <string name="form_download_progress">%1$s. %3$sकी %2$sमीडिया फाइलें मिल रही हैं: </string>
   <string name="version">संस्करण:</string>
   <!--##############################################
+    # GET BLANK FORM - ERROR MESSAGES
+    ##############################################-->
+  <!--Error message displayed when Collect can't connect to a server-->
+  <!--Error message displayed when Collect can't connect to a server because of a security issue-->
+  <!--Error message displayed when a server returns an error status code-->
+  <!--Error message displayed when a server returns an invalid response body-->
+  <!--Error message displayed when the server has not provided a hash identifier for the form being downloaded-->
+  <!--Error message displayed when a form being downloaded cannot be parsed-->
+  <!--Error message displayed when a disk error occurs during form download-->
+  <!--Error message displayed when a form being downloaded specifies an invalid submission URL-->
+  <!--##############################################
     # DELETE SAVED FORM
     ##############################################-->
   <!--Title of a section in "Delete Saved Forms" for deleting filled/saved forms (as opposed to blank forms)-->
@@ -370,10 +382,6 @@
   <string name="change_password">odk पासवर्ड</string>
   <string name="password_error_whitespace">पासवर्ड में अग्रणी या अनुगामी व्हाइटस्पेस की अनुमति नहीं है</string>
   <string name="username_error_whitespace">उपयोगकर्ता नामों में अग्रणी या अनुगामी श्वेत स्थान की अनुमति नहीं है</string>
-  <string name="change_formlist_url">फॉर्म सूची पथ (URL पर जोड़ा गया)</string>
-  <string name="change_submission_url">सबमिशन पथ (URL पर जोड़ा गया)</string>
-  <string name="formlist_url">फॉर्म सूची पथ</string>
-  <string name="submission_url">सबमिशन पथ</string>
   <string name="server_platform_google_sheets">गूगल ड्राइव, गूगल शीट्</string>
   <string name="selected_google_account_text">गूगल अकाउंट</string>
   <!--To use Google Drive, forms must set a submission URL. If they don't, this URL will be used.-->
@@ -554,6 +562,9 @@
   <!--Detail text of the dialog shown when attempting to create a project with connection settings that match an existing project-->
   <!--Button text for adding a duplicate project-->
   <!--Buton text for switching to an existing project-->
+  <!--Toast text shown when the current project is changed-->
+  <!--Description for screen readers of which project is in use. This is part of the project selection dialog-->
+  <!--Description for screen readers of the action to switch to a different existing project. This is part of the project selection dialog-->
   <string name="delete_project_yes">हाँ</string>
   <string name="delete_project_no">नहीं</string>
   <!--##############################################
@@ -568,4 +579,7 @@
   <!--Immediately followed by "Try Collect" which is a link to create a demo project-->
   <!--Preceded by "Don't have a project yet?" question-->
   <!--Error shown when a user tries to open a form that's in a different project-->
+  <!--##############################################
+    # Errors
+    ##############################################-->
 </resources>

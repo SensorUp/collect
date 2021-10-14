@@ -42,14 +42,15 @@ import com.google.android.gms.location.LocationListener;
 
 import org.odk.collect.android.R;
 import org.odk.collect.android.injection.DaggerUtils;
+import org.odk.collect.android.storage.StoragePathProvider;
+import org.odk.collect.android.storage.StorageSubdirectory;
+import org.odk.collect.android.utilities.IconUtils;
+import org.odk.collect.android.utilities.ReferenceLayerUtils;
+import org.odk.collect.android.utilities.ThemeUtils;
+import org.odk.collect.geo.MapPoint;
 import org.odk.collect.location.GoogleFusedLocationClient;
 import org.odk.collect.location.LocationClient;
 import org.odk.collect.location.LocationClientProvider;
-import org.odk.collect.android.storage.StoragePathProvider;
-import org.odk.collect.android.storage.StorageSubdirectory;
-import org.odk.collect.android.utilities.GeoUtils;
-import org.odk.collect.android.utilities.IconUtils;
-import org.odk.collect.android.utilities.ThemeUtils;
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.events.MapListener;
@@ -168,7 +169,7 @@ public class OsmDroidMapFragment extends Fragment implements MapFragment,
 
     @Override public void applyConfig(Bundle config) {
         webMapService = (WebMapService) config.getSerializable(KEY_WEB_MAP_SERVICE);
-        referenceLayerFile = GeoUtils.getReferenceLayerFile(config, storagePathProvider.getOdkDirPath(StorageSubdirectory.LAYERS));
+        referenceLayerFile = ReferenceLayerUtils.getReferenceLayerFile(config, storagePathProvider.getOdkDirPath(StorageSubdirectory.LAYERS));
         if (map != null) {
             map.setTileSource(webMapService.asOnlineTileSource());
             loadReferenceOverlay();
@@ -233,7 +234,8 @@ public class OsmDroidMapFragment extends Fragment implements MapFragment,
         return false;
     }
 
-    @Override public @NonNull MapPoint getCenter() {
+    @Override public @NonNull
+    MapPoint getCenter() {
         return fromGeoPoint(map.getMapCenter());
     }
 
@@ -318,7 +320,7 @@ public class OsmDroidMapFragment extends Fragment implements MapFragment,
 
     @Override public void appendPointToPoly(int featureId, @NonNull MapPoint point) {
         MapFeature feature = features.get(featureId);
-        if (feature != null && feature instanceof PolyFeature) {
+        if (feature instanceof PolyFeature) {
             ((PolyFeature) feature).addPoint(point);
         }
     }
@@ -689,7 +691,7 @@ public class OsmDroidMapFragment extends Fragment implements MapFragment,
             this.map = map;
             this.closedPolygon = closedPolygon;
             polyline = new Polyline();
-            polyline.setColor(getResources().getColor(R.color.mapLine));
+            polyline.setColor(map.getContext().getResources().getColor(R.color.mapLineColor));
             polyline.setOnClickListener((clickedPolyline, mapView, eventPos) -> {
                 int featureId = findFeature(clickedPolyline);
                 if (featureClickListener != null && featureId != -1) {

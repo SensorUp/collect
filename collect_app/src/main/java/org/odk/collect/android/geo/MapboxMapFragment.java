@@ -1,5 +1,11 @@
 package org.odk.collect.android.geo;
 
+import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.backgroundColor;
+import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineColor;
+import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineOpacity;
+import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineWidth;
+import static org.odk.collect.android.storage.StorageSubdirectory.LAYERS;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -58,7 +64,8 @@ import org.odk.collect.android.geo.MbtilesFile.MbtilesException;
 import org.odk.collect.android.injection.DaggerUtils;
 import org.odk.collect.android.location.client.MapboxLocationCallback;
 import org.odk.collect.android.storage.StoragePathProvider;
-import org.odk.collect.android.utilities.GeoUtils;
+import org.odk.collect.android.utilities.ReferenceLayerUtils;
+import org.odk.collect.geo.MapPoint;
 
 import java.io.File;
 import java.io.IOException;
@@ -71,12 +78,6 @@ import javax.inject.Inject;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import timber.log.Timber;
-
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.backgroundColor;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineColor;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineOpacity;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineWidth;
-import static org.odk.collect.android.storage.StorageSubdirectory.LAYERS;
 
 public class MapboxMapFragment extends org.odk.collect.android.geo.mapboxsdk.MapFragment
     implements MapFragment, OnMapReadyCallback,
@@ -264,7 +265,7 @@ public class MapboxMapFragment extends org.odk.collect.android.geo.mapboxsdk.Map
 
     @Override public void applyConfig(Bundle config) {
         styleUrl = config.getString(KEY_STYLE_URL);
-        referenceLayerFile = GeoUtils.getReferenceLayerFile(config, storagePathProvider.getOdkDirPath(LAYERS));
+        referenceLayerFile = ReferenceLayerUtils.getReferenceLayerFile(config, storagePathProvider.getOdkDirPath(LAYERS));
         if (map != null) {
             map.setStyle(getStyleBuilder(), style -> {
                 // See addTo() above for why we add this placeholder layer.
@@ -841,7 +842,7 @@ public class MapboxMapFragment extends org.odk.collect.android.geo.mapboxsdk.Map
                 this.symbols.add(createSymbol(symbolManager, point, true, CENTER));
             }
             line = lineManager.create(new LineOptions()
-                .withLineColor(ColorUtils.colorToRgbaString(getResources().getColor(R.color.mapLine)))
+                .withLineColor(ColorUtils.colorToRgbaString(requireContext().getResources().getColor(R.color.mapLineColor)))
                 .withLineWidth(STROKE_WIDTH)
                 .withLatLngs(new ArrayList<>())
             );

@@ -163,6 +163,7 @@
   <string name="recording_disabled">Gufata amajwi byahagaritse. biraza gukunda muri 1%s</string>
   <!--Error displayed when opened filled form has been deleted on disk-->
   <string name="instance_deleted_message">Inyandiko shingiro yujujwe yarasibwe.</string>
+  <!--Error displayed when something bad happens during updating widgets in a field-list group-->
   <!--##############################################
     # FORM FEATURES
     ##############################################-->
@@ -511,13 +512,24 @@ Hashize: %2$s</string>
   <string name="newer_version_of_a_form_info">Aya ni amakuru agezweho ku ifishi ufite</string>
   <string name="form_update_error">Gushyira ifishi ku gihe ntibyakunze</string>
   <string name="form_update_succeeded">Gushyira ku gihe ifishi byagenze neza</string>
-  <string name="report_to_project_lead">Mu gihe ukomeje guhura niki kibazo, baza uwagusabye gutanga aya makuru</string>
-  <string name="unreachable_error">Collect ntibasha kugera kuri seriveri kuri %s. Ese winjijemo linki neza</string>
-  <string name="security_error">Collect ntibasha guhura na seriveri kuri %s. Ese winjijemo linki neza</string>
-  <string name="server_error">Seriveri %1$s irerekana kode %2$s.</string>
-  <string name="invalid_response">Server 1%s yatanze amakuru atariyo </string>
-  <string name="failure">Ntibyakunze</string>
   <string name="load_remote_form_error">Kubika amakuru ari mu ifishi kuri tabuleti ntibyakunze</string>
+  <string name="failure">Ntibyakunze</string>
+  <!--##############################################
+    # GET BLANK FORM - ERROR MESSAGES
+    ##############################################-->
+  <string name="report_to_project_lead">Mu gihe ukomeje guhura niki kibazo, baza uwagusabye gutanga aya makuru</string>
+  <!--Error message displayed when Collect can't connect to a server-->
+  <string name="unreachable_error">Collect ntibasha kugera kuri seriveri kuri %s. Ese winjijemo linki neza</string>
+  <!--Error message displayed when Collect can't connect to a server because of a security issue-->
+  <string name="security_error">Collect ntibasha guhura na seriveri kuri %s. Ese winjijemo linki neza</string>
+  <!--Error message displayed when a server returns an error status code-->
+  <string name="server_error">Seriveri %1$s irerekana kode %2$s.</string>
+  <!--Error message displayed when a server returns an invalid response body-->
+  <string name="invalid_response">Server 1%s yatanze amakuru atariyo </string>
+  <!--Error message displayed when the server has not provided a hash identifier for the form being downloaded-->
+  <!--Error message displayed when a form being downloaded cannot be parsed-->
+  <!--Error message displayed when a disk error occurs during form download-->
+  <!--Error message displayed when a form being downloaded specifies an invalid submission URL-->
   <!--##############################################
     # DELETE SAVED FORM
     ##############################################-->
@@ -580,12 +592,6 @@ Hashize: %2$s</string>
   <string name="change_password">Ijambo banga rya ODK</string>
   <string name="password_error_whitespace">Mu ijambobanga ahantu hariho ubusa ntibyemewe </string>
   <string name="username_error_whitespace">Kuzuza ahantu hariho ubusa ntabwo byemewe mu izina ugomba gukoresha </string>
-  <string name="custom_server_paths">Hindura inzira za Server </string>
-  <string name="legacy_custom_server_paths_summary">Izasibwa mu nyandiko shingiro izaza. Musabwa gukoresha/ urutonde rw\'inyandiko shingiro na/ uruheherekane rwabyo ku kigega kibika amakuru yose.</string>
-  <string name="change_formlist_url">Inzira igaragaza urutonde rw\'inyandiko shingiro ( Ushireho URL)</string>
-  <string name="change_submission_url">Uburyo bwokohereza (ongera kuri URL)</string>
-  <string name="formlist_url">Inzira igaragaza urutonde rw\'inyandiko shingiro.</string>
-  <string name="submission_url">Inzira zokwohereza</string>
   <string name="server_platform_google_sheets">Google Drive, Google Sheets</string>
   <string name="selected_google_account_text">Konte kuri Google</string>
   <!--To use Google Drive, forms must set a submission URL. If they don't, this URL will be used.-->
@@ -595,7 +601,6 @@ Hashize: %2$s</string>
   <string name="app_theme">Isanganyamatsiko</string>
   <string name="theme_light">Urumuri rw\'insanganyamatsiko.</string>
   <string name="theme_dark">Umwijima w\'isanganyamatsiko.</string>
-  <string name="theme_magenta">Isanganyamatsiko rya Magenta.</string>
   <string name="language">Ururimi</string>
   <string name="use_device_language">Kurikiza imikorere y\'igikoresho</string>
   <string name="font_size">Ingano y\'amagambo</string>
@@ -844,8 +849,11 @@ Birashoboka ko ari zimwe zashyizwemo mubihe bitandukanye cgw ziturutse ahatanduk
   <string name="project_name">Izina rya project</string>
   <string name="project_icon">Akarango ka Project</string>
   <string name="project_color">Ibara rya Project</string>
+  <!--Toast text shown when the current project is changed-->
   <string name="switched_project">Byihinduye kuri %s</string>
+  <!--Description for screen readers of which project is in use. This is part of the project selection dialog-->
   <string name="using_project">Gukoresha %s</string>
+  <!--Description for screen readers of the action to switch to a different existing project. This is part of the project selection dialog-->
   <string name="switch_to_project">Imukira kuri %s</string>
   <string name="delete_project_confirm_message">Inyandiko shingiro zose, zoherejwe n\'igenamitere sizasibwa burundu.</string>
   <string name="delete_project_yes">Yego</string>
@@ -876,4 +884,7 @@ Birashoboka ko ari zimwe zashyizwemo mubihe bitandukanye cgw ziturutse ahatanduk
   <string name="try_demo">Gerageza kubyerekana</string>
   <string name="scan_configuration_qr_code">Umubarendangabanga wemejwe kuri QR</string>
   <!--Error shown when a user tries to open a form that's in a different project-->
+  <!--##############################################
+    # Errors
+    ##############################################-->
 </resources>

@@ -158,6 +158,7 @@
   <!--Error message displayed when copying media from a temporary directory fails-->
   <!--Text displayed in the audio bar when background audio recording is explicitly disabled from the options menu. Should be as short as possible. The inserted string is ⋮ which indicates the options menu.-->
   <!--Error displayed when opened filled form has been deleted on disk-->
+  <!--Error displayed when something bad happens during updating widgets in a field-list group-->
   <!--##############################################
     # FORM FEATURES
     ##############################################-->
@@ -481,8 +482,19 @@
   <string name="newer_version_of_a_form_info">ఇది మీ వద్ద ఉన్న ఫారమ్‌కు నవీకరణ</string>
   <string name="form_update_error">ఫారం నవీకరణ విఫలమైంది</string>
   <string name="form_update_succeeded">ఫారం నవీకరణ విజయవంతమైంది</string>
-  <string name="failure">వైఫల్యం</string>
   <string name="load_remote_form_error">ఫారం జాబితా విఫలమైంది</string>
+  <string name="failure">వైఫల్యం</string>
+  <!--##############################################
+    # GET BLANK FORM - ERROR MESSAGES
+    ##############################################-->
+  <!--Error message displayed when Collect can't connect to a server-->
+  <!--Error message displayed when Collect can't connect to a server because of a security issue-->
+  <!--Error message displayed when a server returns an error status code-->
+  <!--Error message displayed when a server returns an invalid response body-->
+  <!--Error message displayed when the server has not provided a hash identifier for the form being downloaded-->
+  <!--Error message displayed when a form being downloaded cannot be parsed-->
+  <!--Error message displayed when a disk error occurs during form download-->
+  <!--Error message displayed when a form being downloaded specifies an invalid submission URL-->
   <!--##############################################
     # DELETE SAVED FORM
     ##############################################-->
@@ -540,11 +552,6 @@
   <string name="change_password">ODK పాస్ వర్డ్ </string>
   <string name="password_error_whitespace">పాస్ వర్డ్ ముందు లేదా తరువాత స్పేస్ ఉండకూడదు </string>
   <string name="username_error_whitespace">యూసర్ నేమ్ లో ముందు లేదా తరువాత స్పేస్ ఉండకూడదు </string>
-  <string name="custom_server_paths">కస్టమ్ సర్వర్ మార్గాలు</string>
-  <string name="change_formlist_url">ఫారం జాబితా లింకు (URL కు జోడించబడింది)</string>
-  <string name="change_submission_url">సబ్మిషన్ లింక్  (URL కు జోడించబడింది)</string>
-  <string name="formlist_url">ఫారం జాబితా లింక్ </string>
-  <string name="submission_url">సబ్మిషన్ లింక్ </string>
   <string name="server_platform_google_sheets">గూగుల్ డ్రైవ్, గూగుల్ షీట్స్</string>
   <string name="selected_google_account_text">గూగుల్ ఖాతా</string>
   <!--To use Google Drive, forms must set a submission URL. If they don't, this URL will be used.-->
@@ -784,6 +791,9 @@
   <!--Detail text of the dialog shown when attempting to create a project with connection settings that match an existing project-->
   <!--Button text for adding a duplicate project-->
   <!--Buton text for switching to an existing project-->
+  <!--Toast text shown when the current project is changed-->
+  <!--Description for screen readers of which project is in use. This is part of the project selection dialog-->
+  <!--Description for screen readers of the action to switch to a different existing project. This is part of the project selection dialog-->
   <string name="delete_project_yes">అవును</string>
   <string name="delete_project_no">లేదు</string>
   <!--##############################################
@@ -798,4 +808,7 @@
   <!--Immediately followed by "Try Collect" which is a link to create a demo project-->
   <!--Preceded by "Don't have a project yet?" question-->
   <!--Error shown when a user tries to open a form that's in a different project-->
+  <!--##############################################
+    # Errors
+    ##############################################-->
 </resources>

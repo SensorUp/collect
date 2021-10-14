@@ -162,6 +162,7 @@
   <!--Text displayed in the audio bar when background audio recording is explicitly disabled from the options menu. Should be as short as possible. The inserted string is ⋮ which indicates the options menu.-->
   <string name="recording_disabled">録音が無効になりました。 %s で有効にしてください</string>
   <!--Error displayed when opened filled form has been deleted on disk-->
+  <!--Error displayed when something bad happens during updating widgets in a field-list group-->
   <!--##############################################
     # FORM FEATURES
     ##############################################-->
@@ -506,13 +507,24 @@
   <string name="newer_version_of_a_form_info">これはお持ちのフォームの更新です</string>
   <string name="form_update_error">フォームを更新できませんでした</string>
   <string name="form_update_succeeded">フォームの更新に成功しました</string>
-  <string name="report_to_project_lead">この問題が引き続き発生する場合は、データの収集を依頼した人に報告してください。</string>
-  <string name="unreachable_error">Collect が %s のサーバーに到達できません。 URL を正しく入力しましたか?</string>
-  <string name="security_error">Collect が %s のサーバーに安全に接続できません。 URL を正しく入力しましたか?</string>
-  <string name="server_error">サーバー %1$s がステータスコード %2$s を返しました。</string>
-  <string name="invalid_response">サーバー %s が無効なレスポンスを返しました。</string>
-  <string name="failure">失敗</string>
   <string name="load_remote_form_error">フォーム一覧がダウンロードできませんでした</string>
+  <string name="failure">失敗</string>
+  <!--##############################################
+    # GET BLANK FORM - ERROR MESSAGES
+    ##############################################-->
+  <string name="report_to_project_lead">この問題が引き続き発生する場合は、データの収集を依頼した人に報告してください。</string>
+  <!--Error message displayed when Collect can't connect to a server-->
+  <string name="unreachable_error">Collect が %s のサーバーに到達できません。 URL を正しく入力しましたか?</string>
+  <!--Error message displayed when Collect can't connect to a server because of a security issue-->
+  <string name="security_error">Collect が %s のサーバーに安全に接続できません。 URL を正しく入力しましたか?</string>
+  <!--Error message displayed when a server returns an error status code-->
+  <string name="server_error">サーバー %1$s がステータスコード %2$s を返しました。</string>
+  <!--Error message displayed when a server returns an invalid response body-->
+  <string name="invalid_response">サーバー %s が無効なレスポンスを返しました。</string>
+  <!--Error message displayed when the server has not provided a hash identifier for the form being downloaded-->
+  <!--Error message displayed when a form being downloaded cannot be parsed-->
+  <!--Error message displayed when a disk error occurs during form download-->
+  <!--Error message displayed when a form being downloaded specifies an invalid submission URL-->
   <!--##############################################
     # DELETE SAVED FORM
     ##############################################-->
@@ -570,12 +582,6 @@
   <string name="change_password">ODK パスワード</string>
   <string name="password_error_whitespace">パスワードの先頭または末尾に空白は使用できません</string>
   <string name="username_error_whitespace">ユーザー名の先頭または末尾に空白は使用できません</string>
-  <string name="custom_server_paths">カスタムのサーバーパス</string>
-  <string name="legacy_custom_server_paths_summary">将来のバージョンでは削除されます。 お使いのサーバーでは /formList と /submission を使用してください。</string>
-  <string name="change_formlist_url">フォーム一覧のパス (URLに追加されます)</string>
-  <string name="change_submission_url">提出パス (URLに追加されます)</string>
-  <string name="formlist_url">フォーム一覧のパス</string>
-  <string name="submission_url">送信パス</string>
   <string name="server_platform_google_sheets">Google ドライブ, Google スプレッドシート</string>
   <string name="selected_google_account_text">Google アカウント</string>
   <!--To use Google Drive, forms must set a submission URL. If they don't, this URL will be used.-->
@@ -585,7 +591,6 @@
   <string name="app_theme">テーマ</string>
   <string name="theme_light">ライトテーマ</string>
   <string name="theme_dark">ダークテーマ</string>
-  <string name="theme_magenta">マゼンタテーマ</string>
   <string name="language">言語</string>
   <string name="use_device_language">デバイスの言語を使用する</string>
   <string name="font_size">文字フォントサイズ</string>
@@ -825,6 +830,9 @@
   <!--Detail text of the dialog shown when attempting to create a project with connection settings that match an existing project-->
   <!--Button text for adding a duplicate project-->
   <!--Buton text for switching to an existing project-->
+  <!--Toast text shown when the current project is changed-->
+  <!--Description for screen readers of which project is in use. This is part of the project selection dialog-->
+  <!--Description for screen readers of the action to switch to a different existing project. This is part of the project selection dialog-->
   <string name="delete_project_yes">はい</string>
   <string name="delete_project_no">いいえ</string>
   <!--##############################################
@@ -839,4 +847,7 @@
   <!--Immediately followed by "Try Collect" which is a link to create a demo project-->
   <!--Preceded by "Don't have a project yet?" question-->
   <!--Error shown when a user tries to open a form that's in a different project-->
+  <!--##############################################
+    # Errors
+    ##############################################-->
 </resources>

@@ -48,7 +48,7 @@ import org.odk.collect.android.utilities.AnimationUtils;
 import org.odk.collect.android.utilities.FormEntryPromptUtils;
 import org.odk.collect.android.utilities.ScreenUtils;
 import org.odk.collect.android.utilities.SoftKeyboardController;
-import org.odk.collect.android.utilities.StringUtils;
+import org.odk.collect.android.utilities.HtmlUtils;
 import org.odk.collect.android.utilities.ThemeUtils;
 import org.odk.collect.android.utilities.ViewUtils;
 import org.odk.collect.android.widgets.interfaces.Widget;
@@ -62,7 +62,6 @@ import javax.inject.Inject;
 
 import timber.log.Timber;
 
-import static org.odk.collect.android.analytics.AnalyticsEvents.PROMPT;
 import static org.odk.collect.android.formentry.media.FormMediaUtils.getClipID;
 import static org.odk.collect.android.formentry.media.FormMediaUtils.getPlayColor;
 import static org.odk.collect.android.formentry.media.FormMediaUtils.getPlayableAudioURI;
@@ -184,7 +183,6 @@ public abstract class QuestionWidget extends FrameLayout implements Widget {
             }
             if (playableAudioURI != null) {
                 label.setAudio(playableAudioURI, audioHelper);
-                analytics.logEvent(PROMPT, "AudioLabel", questionDetails.getFormAnalyticsID());
             }
         } catch (InvalidReferenceException e) {
             Timber.d(e, "Invalid media reference due to %s ", e.getMessage());
@@ -197,7 +195,7 @@ public abstract class QuestionWidget extends FrameLayout implements Widget {
         TextView guidance;
         GuidanceHint setting = GuidanceHint.get(settingsProvider.getGeneralSettings().getString(ProjectKeys.KEY_GUIDANCE_HINT));
 
-        if (setting.equals(GuidanceHint.No)) {
+        if (setting.equals(GuidanceHint.NO)) {
             return null;
         }
 
@@ -211,10 +209,10 @@ public abstract class QuestionWidget extends FrameLayout implements Widget {
 
         expanded = new AtomicBoolean(false);
 
-        if (setting.equals(GuidanceHint.Yes)) {
+        if (setting.equals(GuidanceHint.YES)) {
             guidanceTextLayout.setVisibility(VISIBLE);
             guidanceTextView.setText(guidanceHint);
-        } else if (setting.equals(GuidanceHint.YesCollapsed)) {
+        } else if (setting.equals(GuidanceHint.YES_COLLAPSED)) {
             guidanceTextLayout.setVisibility(expanded.get() ? VISIBLE : GONE);
 
             View icon = textLayout.findViewById(R.id.help_icon);
@@ -248,7 +246,7 @@ public abstract class QuestionWidget extends FrameLayout implements Widget {
         guidanceTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, questionTextSizeHelper.getSubtitle1());
         guidanceTextView.setHorizontallyScrolling(false);
 
-        guidanceTextView.setText(StringUtils.textToHtml(guidance));
+        guidanceTextView.setText(HtmlUtils.textToHtml(guidance));
 
         guidanceTextView.setMovementMethod(LinkMovementMethod.getInstance());
         return guidanceTextView;
@@ -315,9 +313,9 @@ public abstract class QuestionWidget extends FrameLayout implements Widget {
             // wrap to the widget of vi
             helpText.setHorizontallyScrolling(false);
             if (prompt.getLongText() == null || prompt.getLongText().isEmpty()) {
-                helpText.setText(StringUtils.textToHtml(FormEntryPromptUtils.markQuestionIfIsRequired(s, prompt.isRequired())));
+                helpText.setText(HtmlUtils.textToHtml(FormEntryPromptUtils.markQuestionIfIsRequired(s, prompt.isRequired())));
             } else {
-                helpText.setText(StringUtils.textToHtml(s));
+                helpText.setText(HtmlUtils.textToHtml(s));
             }
             helpText.setMovementMethod(LinkMovementMethod.getInstance());
             return helpText;

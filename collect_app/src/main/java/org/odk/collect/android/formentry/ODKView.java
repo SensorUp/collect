@@ -14,6 +14,10 @@
 
 package org.odk.collect.android.formentry;
 
+import static org.odk.collect.android.injection.DaggerUtils.getComponent;
+import static org.odk.collect.android.preferences.keys.ProjectKeys.KEY_EXTERNAL_APP_RECORDING;
+import static org.odk.collect.android.utilities.ApplicationConstants.RequestCodes;
+
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -51,10 +55,8 @@ import org.javarosa.core.model.instance.TreeReference;
 import org.javarosa.core.reference.ReferenceManager;
 import org.javarosa.form.api.FormEntryCaption;
 import org.javarosa.form.api.FormEntryPrompt;
-import org.odk.collect.analytics.Analytics;
 import org.odk.collect.android.R;
 import org.odk.collect.android.analytics.AnalyticsEvents;
-import org.odk.collect.android.analytics.AnalyticsUtils;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.audio.AudioHelper;
 import org.odk.collect.android.exception.ExternalParamsException;
@@ -75,10 +77,8 @@ import org.odk.collect.android.utilities.QuestionFontSizeUtils;
 import org.odk.collect.android.utilities.QuestionMediaManager;
 import org.odk.collect.android.utilities.ScreenContext;
 import org.odk.collect.android.utilities.ThemeUtils;
-import org.odk.collect.android.utilities.ToastUtils;
 import org.odk.collect.android.widgets.QuestionWidget;
 import org.odk.collect.android.widgets.StringWidget;
-import org.odk.collect.android.widgets.UrlWidget;
 import org.odk.collect.android.widgets.WidgetFactory;
 import org.odk.collect.android.widgets.interfaces.WidgetDataReceiver;
 import org.odk.collect.android.widgets.utilities.AudioPlayer;
@@ -86,6 +86,7 @@ import org.odk.collect.android.widgets.utilities.ExternalAppRecordingRequester;
 import org.odk.collect.android.widgets.utilities.InternalRecordingRequester;
 import org.odk.collect.android.widgets.utilities.RecordingRequesterProvider;
 import org.odk.collect.android.widgets.utilities.WaitingForDataRegistry;
+import org.odk.collect.androidshared.utils.ToastUtils;
 import org.odk.collect.audioclips.PlaybackFailedException;
 import org.odk.collect.audiorecorder.recording.AudioRecorder;
 
@@ -101,10 +102,6 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import timber.log.Timber;
-
-import static org.odk.collect.android.injection.DaggerUtils.getComponent;
-import static org.odk.collect.android.preferences.keys.ProjectKeys.KEY_EXTERNAL_APP_RECORDING;
-import static org.odk.collect.android.utilities.ApplicationConstants.RequestCodes;
 
 /**
  * Contains either one {@link QuestionWidget} if the current form element is a question or
@@ -123,9 +120,6 @@ public class ODKView extends FrameLayout implements OnLongClickListener, WidgetV
 
     @Inject
     public AudioHelperFactory audioHelperFactory;
-
-    @Inject
-    public Analytics analytics;
 
     @Inject
     ActivityAvailability activityAvailability;
@@ -204,8 +198,6 @@ public class ODKView extends FrameLayout implements OnLongClickListener, WidgetV
 
         setupAudioErrors();
         autoplayIfNeeded(advancingPage);
-
-        logAnalyticsForWidgets();
     }
 
     private void setupAudioErrors() {
@@ -241,9 +233,7 @@ public class ODKView extends FrameLayout implements OnLongClickListener, WidgetV
     private Boolean autoplayAudio(FormEntryPrompt firstPrompt) {
         PromptAutoplayer promptAutoplayer = new PromptAutoplayer(
                 audioHelper,
-                ReferenceManager.instance(),
-                analytics,
-                AnalyticsUtils.getFormHash(Collect.getInstance().getFormController())
+                ReferenceManager.instance()
         );
 
         return promptAutoplayer.autoplayIfNeeded(firstPrompt);
@@ -458,11 +448,11 @@ public class ODKView extends FrameLayout implements OnLongClickListener, WidgetV
             } catch (ExternalParamsException e) {
                 Timber.e(e, "ExternalParamsException");
 
-                ToastUtils.showShortToast(e.getMessage());
+                ToastUtils.showShortToast(getContext(), e.getMessage());
             } catch (ActivityNotFoundException e) {
                 Timber.d(e, "ActivityNotFoundExcept");
 
-                ToastUtils.showShortToast(errorString);
+                ToastUtils.showShortToast(getContext(), errorString);
             }
         });
     }
@@ -636,7 +626,7 @@ public class ODKView extends FrameLayout implements OnLongClickListener, WidgetV
                 scrollTo(qw);
 
                 ValueAnimator va = new ValueAnimator();
-                va.setIntValues(getResources().getColor(R.color.red_500), getDrawingCacheBackgroundColor());
+                va.setIntValues(new ThemeUtils(getContext()).getColorError(), getDrawingCacheBackgroundColor());
                 va.setEvaluator(new ArgbEvaluator());
                 va.addUpdateListener(valueAnimator -> qw.setBackgroundColor((int) valueAnimator.getAnimatedValue()));
                 va.setDuration(2500);
@@ -686,13 +676,5 @@ public class ODKView extends FrameLayout implements OnLongClickListener, WidgetV
             widgetValueChangedListener.widgetValueChanged(changedWidget);
         }
 
-    }
-
-    private void logAnalyticsForWidgets() {
-        for (QuestionWidget widget : widgets) {
-            if (widget instanceof UrlWidget) {
-                formEntryViewModel.logFormEvent(AnalyticsEvents.URL_QUESTION);
-            }
-        }
     }
 }

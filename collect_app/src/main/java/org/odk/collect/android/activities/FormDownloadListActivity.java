@@ -37,12 +37,13 @@ import org.odk.collect.android.R;
 import org.odk.collect.android.activities.viewmodels.FormDownloadListViewModel;
 import org.odk.collect.android.adapters.FormDownloadListAdapter;
 import org.odk.collect.android.application.Collect;
+import org.odk.collect.android.errors.ErrorItem;
 import org.odk.collect.android.formentry.RefreshFormListDialogFragment;
 import org.odk.collect.android.formmanagement.FormDownloader;
 import org.odk.collect.android.formmanagement.FormSourceExceptionMapper;
 import org.odk.collect.android.formmanagement.ServerFormDetails;
 import org.odk.collect.android.formmanagement.ServerFormsDetailsFetcher;
-import org.odk.collect.forms.FormSourceException;
+import org.odk.collect.android.fragments.dialogs.FormsDownloadResultDialog;
 import org.odk.collect.android.injection.DaggerUtils;
 import org.odk.collect.android.listeners.DownloadFormsTaskListener;
 import org.odk.collect.android.listeners.FormListDownloaderListener;
@@ -53,9 +54,11 @@ import org.odk.collect.android.tasks.DownloadFormsTask;
 import org.odk.collect.android.utilities.ApplicationConstants;
 import org.odk.collect.android.utilities.AuthDialogUtility;
 import org.odk.collect.android.utilities.DialogUtils;
-import org.odk.collect.android.utilities.ToastUtils;
 import org.odk.collect.android.utilities.TranslationHandler;
 import org.odk.collect.android.utilities.WebCredentialsUtils;
+import org.odk.collect.android.views.DayNightProgressDialog;
+import org.odk.collect.androidshared.utils.ToastUtils;
+import org.odk.collect.forms.FormSourceException;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -87,7 +90,8 @@ import timber.log.Timber;
  */
 public class FormDownloadListActivity extends FormListActivity implements FormListDownloaderListener,
         DownloadFormsTaskListener, AuthDialogUtility.AuthDialogUtilityResultListener,
-        AdapterView.OnItemClickListener, RefreshFormListDialogFragment.RefreshFormListDialogFragmentListener {
+        AdapterView.OnItemClickListener, RefreshFormListDialogFragment.RefreshFormListDialogFragmentListener,
+        FormsDownloadResultDialog.FormDownloadResultDialogListener {
     private static final String FORM_DOWNLOAD_LIST_SORTING_ORDER = "formDownloadListSortingOrder";
 
     public static final String DISPLAY_ONLY_UPDATED_FORMS = "displayOnlyUpdatedForms";
@@ -110,7 +114,6 @@ public class FormDownloadListActivity extends FormListActivity implements FormLi
 
     private final ArrayList<HashMap<String, String>> filteredFormList = new ArrayList<>();
 
-    private static final boolean EXIT = true;
     private static final boolean DO_NOT_EXIT = false;
 
     private boolean displayOnlyUpdatedForms;
@@ -269,7 +272,7 @@ public class FormDownloadListActivity extends FormListActivity implements FormLi
      */
     private void downloadFormList() {
         if (!connectivityProvider.isDeviceOnline()) {
-            ToastUtils.showShortToast(R.string.no_connection);
+            ToastUtils.showShortToast(this, R.string.no_connection);
 
             if (viewModel.isDownloadOnlyMode()) {
                 setReturnResult(false, getString(R.string.no_connection), viewModel.getFormResults());
@@ -407,7 +410,7 @@ public class FormDownloadListActivity extends FormListActivity implements FormLi
 
             downloadFormsTask.execute(filesToDownload);
         } else {
-            ToastUtils.showShortToast(R.string.noselect_error);
+            ToastUtils.showShortToast(this, R.string.noselect_error);
         }
     }
 
@@ -624,7 +627,7 @@ public class FormDownloadListActivity extends FormListActivity implements FormLi
     }
 
     private void createCancelDialog() {
-        cancelDialog = new ProgressDialog(this);
+        cancelDialog = new DayNightProgressDialog(this);
         cancelDialog.setTitle(getString(R.string.canceling));
         cancelDialog.setMessage(getString(R.string.please_wait));
         cancelDialog.setIcon(android.R.drawable.ic_dialog_info);
@@ -653,7 +656,18 @@ public class FormDownloadListActivity extends FormListActivity implements FormLi
         cleanUpWebCredentials();
 
         DialogUtils.dismissDialog(RefreshFormListDialogFragment.class, getSupportFragmentManager());
-        createAlertDialog(getString(R.string.download_forms_result), getDownloadResultMessage(result), EXIT);
+
+        ArrayList<ErrorItem> failures = new ArrayList<>();
+        for (Map.Entry<ServerFormDetails, String> entry : result.entrySet()) {
+            if (!entry.getValue().equals(getString(R.string.success))) {
+                failures.add(new ErrorItem(entry.getKey().getFormName(), getString(R.string.form_details, entry.getKey().getFormId(), entry.getKey().getFormVersion()), entry.getValue()));
+            }
+        }
+
+        Bundle args = new Bundle();
+        args.putSerializable(FormsDownloadResultDialog.ARG_FAILURES, failures);
+        args.putSerializable(FormsDownloadResultDialog.ARG_NUMBER_OF_ALL_FORMS, result.size());
+        DialogUtils.showIfNotShowing(FormsDownloadResultDialog.class, args, getSupportFragmentManager());
 
         // Set result to true for forms which were downloaded
         if (viewModel.isDownloadOnlyMode()) {
@@ -770,5 +784,10 @@ public class FormDownloadListActivity extends FormListActivity implements FormLi
             downloadFormsTask.cancel(true);
         }
         viewModel.setLoadingCanceled(true);
+    }
+
+    @Override
+    public void onCloseDownloadingResult() {
+        finish();
     }
 }

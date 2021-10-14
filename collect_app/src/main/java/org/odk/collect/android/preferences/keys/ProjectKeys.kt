@@ -15,10 +15,6 @@ object ProjectKeys {
     const val KEY_USERNAME = "username"
     const val KEY_PASSWORD = "password"
 
-    // custom_server_paths_preferences.xml
-    const val KEY_FORMLIST_URL = "formlist_url"
-    const val KEY_SUBMISSION_URL = "submission_url"
-
     // google_preferences.xml
     const val KEY_SELECTED_GOOGLE_ACCOUNT = "selected_google_account"
     const val KEY_GOOGLE_SHEETS_URL = "google_sheets_url"
@@ -91,9 +87,6 @@ object ProjectKeys {
     const val BASEMAP_SOURCE_STAMEN = "stamen"
     const val BASEMAP_SOURCE_CARTO = "carto"
 
-    // experimental
-    const val KEY_MAGENTA_THEME = "magenta"
-
     @JvmStatic
     val defaults: HashMap<String, Any>
         get() {
@@ -126,21 +119,15 @@ object ProjectKeys {
             hashMap[KEY_GOOGLE_SHEETS_URL] = ""
             // identity_preferences.xml
             hashMap[KEY_ANALYTICS] = true
-            // custom_server_paths_preferenceshs_preferences.xml
-            hashMap[KEY_FORMLIST_URL] =
-                Collect.getInstance().getString(R.string.default_odk_formlist)
-            hashMap[KEY_SUBMISSION_URL] =
-                Collect.getInstance().getString(R.string.default_odk_submission)
             // server_preferences.xml
             hashMap[KEY_PROTOCOL] = PROTOCOL_SERVER
             // user_interface_preferences.xml
-            hashMap[KEY_APP_THEME] = Collect.getInstance().getString(R.string.app_theme_light)
+            hashMap[KEY_APP_THEME] = Collect.getInstance().getString(R.string.app_theme_system)
             hashMap[KEY_APP_LANGUAGE] = ""
             hashMap[KEY_FONT_SIZE] = QuestionFontSizeUtils.DEFAULT_FONT_SIZE.toString()
             hashMap[KEY_NAVIGATION] = NAVIGATION_BOTH
             hashMap[KEY_SHOW_SPLASH] = false
             hashMap[KEY_SPLASH_PATH] = Collect.getInstance().getString(R.string.default_splash_path)
-            hashMap[KEY_MAGENTA_THEME] = false
             hashMap[KEY_EXTERNAL_APP_RECORDING] = true
             // map_preferences.xml
             hashMap[KEY_BASEMAP_SOURCE] = BASEMAP_SOURCE_GOOGLE
